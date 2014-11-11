@@ -1,0 +1,16 @@
+#!/bin/bash
+
+set -e
+set -o xtrace
+
+export HOME="/home/trove"
+
+git clone https://github.com/openstack/trove
+wget -P /tmp/ https://bitbucket.org/pypa/setuptools/raw/bootstrap/ez_setup.py
+python /tmp/ez_setup.py
+wget -P /tmp/ https://raw.github.com/pypa/pip/master/contrib/get-pip.py
+python /tmp/get-pip.py
+
+cd trove
+python setup.py install
+cd ~

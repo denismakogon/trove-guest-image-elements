@@ -1,0 +1,10 @@
+#!/bin/bash
+
+set -e
+set -o xtrace
+
+export HOME="/home/trove"
+
+install -D -g trove -o trove -m 0755 $(dirname $0)/trove-guest $HOME
+ln -s $HOME/trove-guest /etc/init.d/trove-guest
+update-rc.d trove-guest defaults

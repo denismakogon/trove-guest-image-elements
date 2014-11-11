@@ -1,0 +1,12 @@
+#!/bin/sh
+
+# CONTEXT: GUEST during CONSTRUCTION as ROOT
+# PURPOSE: Install controller base required packages
+
+set -e
+set -o xtrace
+
+export DEBIAN_FRONTEND=noninteractive
+apt-get install open-vm-tools -y
+apt-get install python-guestfs -y --force-yes
+apt-get install libguestfs-tools -y --force-yes

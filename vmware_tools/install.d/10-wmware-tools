@@ -1,0 +1,17 @@
+#!/bin/bash
+
+set -e
+set -o xtrace
+
+
+export DEBIAN_FRONTEND=noninteractive
+apt-get install open-vm-tools -y
+apt-get install python-guestfs -y --force-yes
+apt-get install libguestfs-tools -y --force-yes
+
+wget http://packages.vmware.com/tools/keys/VMWARE-PACKAGING-GPG-RSA-KEY.pub
+apt-key add VMWARE-PACKAGING-GPG-RSA-KEY.pub
+echo -e "deb http://packages.vmware.com/tools/esx/5.0u2/ubuntu precise main" > /etc/apt/sources.list.d/vmware.list
+apt-get update
+kernel=$(uname -r | awk -F "-" '{print $3}')
+apt-get install vmware-tools-esx-kmods.*-$kernel -y

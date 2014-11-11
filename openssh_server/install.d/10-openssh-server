@@ -1,0 +1,14 @@
+#!/bin/sh
+
+# CONTEXT: GUEST during CONSTRUCTION as ROOT
+# PURPOSE: Install controller base required packages
+
+set -e
+set -o xtrace
+
+apt-get install openssh-server -y
+mkdir ~/.ssh
+
+install-packages augeas-tools
+sed -i "s/disable_root: true/disable_root: false/" /etc/cloud/cloud.cfg
+augtool -s set /files/etc/ssh/sshd_config/PasswordAuthentication yes
