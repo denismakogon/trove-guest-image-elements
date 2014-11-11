@@ -38,15 +38,24 @@ To build an image please run this commands:
 
     export DATASTORE=...
     export DATASTORE_VERSION=...
-    disk-image-create -a amd64 -o ${DATASTORE}_trove-${DATASTORE_VERSION} -x --qemu-img-options compat=0.10 \
-        ubuntu vm ${DATASTORE}-${DATASTORE_VERSION} trove-guest
+    disk-image-create -a amd64 -o ${DATASTORE}-{DATASTORE_VERSION}-trove -x --qemu-img-options compat=0.10 \
+        ubuntu vm ${DATASTORE} trove-guest
 
     For example:
 
         Cassandra datastore:
 
             export DATASTORE="cassandra"
-            export DATASTORE_VERSION="latest"
+            export DATASTORE_VERSION="2.1.1"
+
+    If DATASTORE VERSION wasn't mentioned each datastore image element would use its own default version.
+    For example:
+
+        PostgreSQL datastore:
+
+            export DATASTORE="postgresql"
+            default datastore version 9.1 would be picked
+
 
 If you want to build image for development purposes please add next elements into previos command:
 

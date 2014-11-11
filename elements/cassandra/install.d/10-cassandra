@@ -13,7 +13,7 @@ apt-get install -qy libxml2-dev ntp mc
 apt-get install -qy libxslt1-dev python-pexpect
 apt-get install -qy python-migrate build-essential
 
-apt-get install cassandra -qy
+apt-get install cassandra=${DATASTORE_VERSION:-2.1.1} -qy
 service cassandra stop
 rm -rf /var/lib/cassandra/data/system/*
 service cassandra start

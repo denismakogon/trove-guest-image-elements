@@ -1,0 +1,8 @@
+set -e
+set -o xtrace
+
+export DEBIAN_FRONTEND=noninteractive
+apt-get install -qy curl
+apt-get install -qy libssl0.9.8
+curl -O http://packages.couchbase.com/releases/${DATASTORE_VERSION:-2.2.0}/couchbase-server-community_${DATASTORE_VERSION:-2.2.0}_x86_64.deb
+INSTALL_DONT_START_SERVER=1 dpkg -i couchbase-server-community_${DATASTORE_VERSION:-2.2.0}_x86_64.deb
