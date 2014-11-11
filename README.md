@@ -50,5 +50,5 @@ To build an image please run this commands:
 
 If you want to build image for development purposes please add next elements into previos command:
 
-    ssh_keys_injection
-    openssh_server
+    ssh-keys-injection
+    openssh-server
