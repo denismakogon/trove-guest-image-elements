@@ -29,6 +29,6 @@ need.
     git clone https://github.com/denismakogon/trove-guest-image-elements.git
     git clone https://git.openstack.org/openstack/diskimage-builder.git
     git clone https://git.openstack.org/openstack/tripleo-image-elements.git
-    export ELEMENTS_PATH=tripleo-image-elements/elements:trove-guest-image-elements/:diskimage-builder/elements
+    export ELEMENTS_PATH=tripleo-image-elements/elements:trove-guest-image-elements/elements:diskimage-builder/elements
 
 
