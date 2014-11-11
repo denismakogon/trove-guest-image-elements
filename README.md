@@ -36,9 +36,17 @@ Building images
 
 To build an image please run this commands:
 
-    export DATASTORE="mysql"
-    disk-image-create -a amd64 -o ${DATASTORE}_trove-5.5 -x --qemu-img-options compat=0.10 \
-        ubuntu vm ${DATASTORE} trove-guest
+    export DATASTORE=...
+    export DATASTORE_VERSION=...
+    disk-image-create -a amd64 -o ${DATASTORE}_trove-${DATASTORE_VERSION} -x --qemu-img-options compat=0.10 \
+        ubuntu vm ${DATASTORE}-${DATASTORE_VERSION} trove-guest
+
+    For example:
+
+        Cassandra datastore:
+
+            export DATASTORE="cassandra"
+            export DATASTORE_VERSION="latest"
 
 If you want to build image for development purposes please add next elements into previos command:
 
