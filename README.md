@@ -54,10 +54,12 @@ To build an image please run this commands:
         PostgreSQL datastore:
 
             export DATASTORE="postgresql"
-            default datastore version 9.1 would be picked
+            default datastore version 9.3 would be picked
 
 
 If you want to build image for development purposes please add next elements into previos command:
 
     ssh-keys-injection
     openssh-server
+
+Note: this elements are orientied to work with Debian/Ubuntu 14.04 Trusty Tahr
