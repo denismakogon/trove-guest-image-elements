@@ -1,0 +1,10 @@
+#!/bin/sh
+
+# CONTEXT: GUEST during CONSTRUCTION as ROOT
+# PURPOSE: Install controller base required packages
+
+set -ex
+
+export DEBIAN_FRONTEND=noninteractive
+
+apt-get install -y redis-server=${DATASTORE_VERSION:-2:2.8.4-2}
