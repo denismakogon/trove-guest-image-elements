@@ -61,4 +61,8 @@ If you want to build image for development purposes please add next elements int
 
     openssh-server
 
+If you want to build image for vCenter please add next elements:
+
+    vmware-tools
+
 Note: this elements are orientied to work with Debian/Ubuntu 14.04 Trusty Tahr
