@@ -1,8 +1,0 @@
-#!/bin/bash
-
-set -e
-set -o xtrace
-
-export GUEST_ACCESS_KEYS="/home/trove/.ssh/authorized_keys"
-cp $(dirname $0)/authorized_keys ${GUEST_ACCESS_KEYS}
-chmod 755 ${GUEST_ACCESS_KEYS}
