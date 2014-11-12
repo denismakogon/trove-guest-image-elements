@@ -6,19 +6,14 @@
 set -e
 set -o xtrace
 
-# Add Percona GPG key
-if [ ! -e /home/trove/.gnupg ]; then
-    mkdir -p /home/trove/.gnupg
-fi
-
 apt-key adv --keyserver hkp://keys.gnupg.net --recv-keys 1C4CBDCDCD2EFD2A
 
 # add Percona repo
 # creates the percona sources list
+
 cat <<EOL > /etc/apt/sources.list.d/percona.list
-deb http://repo.percona.com/apt $RELEASE main
-deb-src http://repo.percona.com/apt $RELEASE main
+deb http://repo.percona.com/apt trusty main
+deb-src http://repo.percona.com/apt trusty main
 EOL
 
-# force an update
 apt-get update
