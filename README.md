@@ -38,7 +38,7 @@ To build an image please run this commands:
 
     export DATASTORE=...
     export DATASTORE_VERSION=...
-    disk-image-create -a amd64 -o ${DATASTORE}-{DATASTORE_VERSION}-trove -x --qemu-img-options compat=0.10 \
+    disk-image-create -a amd64 -o ${DATASTORE}-${DATASTORE_VERSION}-trove -x --qemu-img-options compat=0.10 \
         ubuntu vm ${DATASTORE} trove-guest
 
     For example:
