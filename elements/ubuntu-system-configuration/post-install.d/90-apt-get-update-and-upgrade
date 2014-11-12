@@ -5,3 +5,4 @@ set -o xtrace
 
 apt-get update
 apt-get upgrade -qy
+apt-get autoremove -qy
