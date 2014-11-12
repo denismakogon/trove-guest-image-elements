@@ -17,6 +17,7 @@ Checkout this source tree and also the diskimage builder, export an
 ELEMENTS\PATH to add elements from this tree, and build any disk images you
 need.
 
+    sudo apt-get install qemu-utils -qy
     virtualenv .
     source bin/activate
     pip install dib-utils pyyaml
