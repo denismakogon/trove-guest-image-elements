@@ -6,14 +6,8 @@ Building prerequisites
 
 Each image for datastore should include next mandatory elements:
 
-    datastore (for example mysql, cassandra, etc.)
+    ${DISTRO}-datastore (for example ubuntu-mysql, ubuntu-cassandra, etc.)
     trove-guest
-
-
-Each image for datastore might include next optional elements:
-
-    openssh_server
-    ssh_key_injection
 
 
 Instructions
@@ -36,10 +30,11 @@ Building images
 
 To build an image please run this commands:
 
+    export DISTRO=ubuntu
     export DATASTORE=...
     export DATASTORE_VERSION=...
-    disk-image-create -a amd64 -o ${DATASTORE}-${DATASTORE_VERSION}-trove -x --qemu-img-options compat=0.10 \
-        ubuntu vm ${DATASTORE} trove-guest
+    disk-image-create -a amd64 -o ${DISTRO}-${DATASTORE}-${DATASTORE_VERSION}-guest-image -x --qemu-img-options compat=0.10 \
+        ${DISTRO} vm ${DISTRO}-${DATASTORE} trove-guest
 
     For example:
 
@@ -60,6 +55,6 @@ To build an image please run this commands:
 If you want to build image for development purposes please add next elements into previos command:
 
     ssh-keys-injection
-    openssh-server
+    ${DISTRO}-openssh-server
 
 Note: this elements are orientied to work with Debian/Ubuntu 14.04 Trusty Tahr
