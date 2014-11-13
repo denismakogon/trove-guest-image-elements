@@ -34,6 +34,7 @@ To build an image please run this commands:
     export DISTRO=ubuntu
     export DATASTORE=...
     export DATASTORE_VERSION=...
+    export DIB_CLOUD_INIT_DATASOURCES="ConfigDrive"
     disk-image-create -a amd64 \
         -o ${DISTRO}-${DATASTORE}-${DATASTORE_VERSION}-guest-image \
         -x --qemu-img-options compat=0.10 \
