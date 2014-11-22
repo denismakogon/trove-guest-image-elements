@@ -6,8 +6,7 @@ Building prerequisites
 
 Each image for datastore should include next mandatory elements:
 
-    ${DISTRO}-datastore (for example ubuntu-mysql, ubuntu-cassandra, etc.)
-    trove-guest
+    ${DISTRO}-${DATASTORE}-guest-image (for example ubuntu-mysql-guest-image, ubuntu-cassandra-guest-image, etc.)
 
 
 Instructions
@@ -17,9 +16,9 @@ Checkout this source tree and also the diskimage builder, export an
 ELEMENTS\PATH to add elements from this tree, and build any disk images you
 need.
 
-    sudo apt-get install qemu-utils -qy
-    virtualenv .
-    source bin/activate
+    sudo apt-get install qemu-utils python-virtualenv -qy
+    virtualenv .venv
+    source .venv/bin/activate
     pip install dib-utils pyyaml
     pip install git+https://github.com/openstack/diskimage-builder.git
     git clone https://github.com/openstack/tripleo-image-elements.git
@@ -38,9 +37,7 @@ To build an image please run this commands:
     disk-image-create -a amd64 \
         -o ${DISTRO}-${DATASTORE}-${DATASTORE_VERSION}-guest-image \
         -x --qemu-img-options compat=0.10 \
-        ${DISTRO} vm \
-        ${DISTRO}-${DATASTORE} \
-        ${DISTRO}-trove-guest
+        ${DISTRO}-${DATASTORE_VERSION}-guest-image
 
     For example:
 
@@ -64,6 +61,6 @@ If you want to build image for development purposes please add next elements int
 
 If you want to build image for vCenter please add next elements:
 
-    vmware-tools
+    ${DISTOR}-vmware-tools
 
 Note: this elements are orientied to work with Debian/Ubuntu 14.04 Trusty Tahr
