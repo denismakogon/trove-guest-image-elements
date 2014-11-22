@@ -1,0 +1,23 @@
+#!/bin/sh
+
+set -e
+set -o xtrace
+
+apt-get install libreadline-dev zlib1g-dev flex bison -qy
+
+
+wget http://sourceforge.net/projects/postgres-xl/files/Releases/Version_${DATASTORE_VERSION:-9.2}rc/postgres-xl-v${DATASTORE_VERSION:-9.2}-src.tar.gz
+gunzip pgxl-v${DATASTORE_VERSION:-9.2}.tar.gz
+tar xf pgxl-v${DATASTORE_VERSION:-9.2}.tar
+cd postres-xl/
+
+./configure
+make
+make install
+
+cd contrib/pgxc_ctl
+make
+make install
+
+su postgres -c "pgxc_ctl prepare"
+su postgres -c "pgxc_ctl init all"

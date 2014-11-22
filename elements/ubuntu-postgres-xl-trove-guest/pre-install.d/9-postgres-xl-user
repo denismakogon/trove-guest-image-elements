@@ -1,0 +1,20 @@
+#!/bin/sh
+
+set -e
+set -o xtrace
+
+if ! id -u postgres >/dev/null 2>&1; then
+    echo "Adding postgres user"
+    useradd -G sudo -m postgres -s /bin/bash
+    chown postgres:postgres /home/postgres
+    passwd postgres <<_EOF_
+postgres
+postgres
+_EOF_
+fi
+
+TEMPFILE=`mktemp`
+echo "postgres ALL=(ALL) NOPASSWD:ALL" > $TEMPFILE
+chmod 0440 $TEMPFILE
+sudo chown postgres:postgres $TEMPFILE
+sudo mv $TEMPFILE /etc/sudoers.d/90_postgres
