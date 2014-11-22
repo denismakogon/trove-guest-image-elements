@@ -37,7 +37,7 @@ To build an image please run this commands:
     disk-image-create -a amd64 \
         -o ${DISTRO}-${DATASTORE}-${DATASTORE_VERSION}-guest-image \
         -x --qemu-img-options compat=0.10 \
-        ${DISTRO}-${DATASTORE_VERSION}-guest-image
+        ${DISTRO}-${DATASTORE}-guest-image
 
     For example:
 
