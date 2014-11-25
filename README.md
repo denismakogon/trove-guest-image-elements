@@ -30,6 +30,9 @@ Building images
 
 To build an image please run this commands:
 
+
+    export TROVE_REMOTE_REPO="https://github.com/openstack/trove"
+    export TROVE_REMOTE_REPO_BRANCH=master
     export DISTRO=ubuntu
     export DATASTORE=...
     export DATASTORE_VERSION=...
@@ -38,6 +41,8 @@ To build an image please run this commands:
         -o ${DISTRO}-${DATASTORE}-${DATASTORE_VERSION}-guest-image \
         -x --qemu-img-options compat=0.10 \
         ${DISTRO}-${DATASTORE}-guest-image
+
+    Note. Only anonymous HTTP(S) accessable Git repos are allowed.
 
     For example:
 
