@@ -3,14 +3,23 @@
 set -e
 set -o xtrace
 
-export HOME="/home/trove"
+#export HOME="/home/trove"
 
-wget -P /tmp/ https://bitbucket.org/pypa/setuptools/raw/bootstrap/ez_setup.py
-python /tmp/ez_setup.py
-wget -P /tmp/ https://raw.github.com/pypa/pip/master/contrib/get-pip.py
-python /tmp/get-pip.py
+#wget -P /tmp/ https://bitbucket.org/pypa/setuptools/raw/bootstrap/ez_setup.py
+#python /tmp/ez_setup.py
+#wget -P /tmp/ https://raw.github.com/pypa/pip/master/contrib/get-pip.py
+#python /tmp/get-pip.py
 
-mkdir -p ${HOME}/trove; cd ${HOME}/trove
-git init; git pull ${TROVE_REMOTE_REPO:-https://github.com/openstack/trove} ${TROVE_REMOTE_REPO_BRANCH:-master}
-python setup.py install
-cd ~
+#mkdir -p ${HOME}/trove; cd ${HOME}/trove
+#git init; git pull ${TROVE_REMOTE_REPO:-https://github.com/openstack/trove} ${TROVE_REMOTE_REPO_BRANCH:-master}
+#python setup.py install
+#cd ~
+
+export DEBIAN_FRONTEND=noninteractive 
+apt-get -y install ubuntu-cloud-keyring 
+#echo "deb http://ubuntu-cloud.archive.canonical.com/ubuntu trusty-updates/kilo main" > /etc/apt/sources.list.d/cloudarchive-kilo.list 
+echo -e "deb http://ubuntu-cloud.archive.canonical.com/ubuntu trusty-updates/kilo main" | sudo tee /etc/apt/sources.list.d/cloudarchive-kilo.list
+apt-get update && apt-get -y dist-upgrade 
+apt-get -qy install trove-guestagent
+
+echo  "" > sudo tee /etc/guest_info

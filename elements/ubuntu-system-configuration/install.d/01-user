@@ -6,12 +6,12 @@
 set -e
 set -o xtrace
 
-if ! id -u trove >/dev/null 2>&1; then
-    echo "Adding trove user"
-    useradd -G sudo -m trove -s /bin/bash
-    chown trove:trove /home/trove
-    passwd trove <<_EOF_
-trove
-trove
-_EOF_
-fi
+#if ! id -u trove >/dev/null 2>&1; then
+ #   echo "Adding trove user"
+ #   useradd -G sudo -m trove -s /bin/bash
+ ##   chown trove:trove /home/trove
+  #  passwd trove <<_EOF_
+#trove
+#trove
+#_EOF_
+#fi
