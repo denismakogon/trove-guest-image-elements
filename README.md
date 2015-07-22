@@ -40,6 +40,20 @@ To build an image please run this commands:
 	export DIB_DEV_USER_SHELL=/bin/bash
 	export DIB_DEV_USER_PWDLESS_SUDO=true
 	export DIB_DEV_USER_AUTHORIZED_KEYS=/home/sa709c/.ssh/authorized_keys    
+	
+For Trove Guest agent config:
+
+	export DIB_TROVE_RABBITMQ_HOSTS=172.24.4.1:5672
+	export DIB_TROVE_RABBIT_USERID=guest
+	export DIB_TROVE_RABBIT_PASSWORD=guest
+	export DIB_TROVE_RABBIT_USE_SSL=false
+	export DIB_TROVE_AUTH_URL=http://172.24.8.18:35357/v2.0
+	export DIB_TROVE_NOVA_PROXY_ADMIN_USER=nova
+	export DIB_TROVE_NOVA_PROXY_ADMIN_PASS=devstack
+	export DIB_TROVE_NOVA_PROXY_ADMIN_TENANT_NAME=service
+	export DIB_TROVE_SWIFT_URL=http://172.24.8.18:8080/v1/AUTH_
+	export DIB_TROVE_SWIFT_SERVICE_TYPE=object-store
+	export DIB_TROVE_BACKUP_SWIFT_CONTAINER=database_backups
   
 	disk-image-create -a amd64 \
         -o ${DISTRO}-${DATASTORE}-${DATASTORE_VERSION}-guest-image \

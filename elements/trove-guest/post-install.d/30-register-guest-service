@@ -3,8 +3,6 @@
 set -e
 set -o xtrace
 
-#export HOME="/home/trove"
+sed -i 's/\/etc\/trove\/trove\.conf/\/etc\/trove\/trove\-guestagent\.conf\ \-\-config-file\=\/etc\/guest\_info/g' /etc/init/trove-guestagent.conf
 
-#install -D -g trove -o trove -m 0755 $(dirname $0)/trove-guest $HOME
-#ln -s $HOME/trove-guest /etc/init.d/trove-guest
-#update-rc.d trove-guest defaults
+service trove-guestagent restart
