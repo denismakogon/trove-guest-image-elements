@@ -7,4 +7,4 @@ export DEBIAN_FRONTEND=noninteractive
 #apt-get update && apt-get -y dist-upgrade
 apt-get -qy install trove-guestagent
 adduser trove sudo
-echo  "" > sudo tee /etc/guest_info
+touch /etc/guest_info
