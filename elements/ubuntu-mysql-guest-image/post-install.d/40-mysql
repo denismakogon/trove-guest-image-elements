@@ -157,5 +157,5 @@ replication_namespace = trove.guestagent.strategies.replication.mysql_gtid
 
 EOF
 
-
+rm /var/log/trove/trove-guestagent.log
 service trove-guestagent restart
