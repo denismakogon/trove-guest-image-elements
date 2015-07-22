@@ -62,7 +62,7 @@ rabbit_hosts=$DIB_TROVE_RABBITMQ_HOSTS
 # rabbit_use_ssl=false
 
 # The RabbitMQ userid. (string value)
-rabbit_userid=$DIB_TROVE_RABBITMQ_USERID
+rabbit_userid=$DIB_TROVE_RABBIT_USERID
 
 # The RabbitMQ password. (string value)
 #rabbit_password=f7999d1955c5014aa32c
