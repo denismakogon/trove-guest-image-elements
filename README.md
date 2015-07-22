@@ -30,19 +30,18 @@ Building images
 
 To build an image please run this commands:
 
-
-  export DISTRO=ubuntu 
-  export DATASTORE=mysql
-  export DATASTORE_VERSION=5.6
-  export DIB_CLOUD_INIT_ETC_HOSTS=true
-  export DIB_CLOUD_INIT_DATASOURCES="ConfigDrive"
-  export DIB_DEV_USER_USERNAME=ks
-  export DIB_DEV_USER_PASSWORD=w8EmsJXTMaG0e97NK8lM
-  export DIB_DEV_USER_SHELL=/bin/bash
-  export DIB_DEV_USER_PWDLESS_SUDO=true
-  export DIB_DEV_USER_AUTHORIZED_KEYS=/home/sa709c/.ssh/authorized_keys    
+	export DISTRO=ubuntu 
+	export DATASTORE=mysql
+	export DATASTORE_VERSION=5.6
+	export DIB_CLOUD_INIT_ETC_HOSTS=true
+	export DIB_CLOUD_INIT_DATASOURCES="ConfigDrive"
+	export DIB_DEV_USER_USERNAME=ks
+	export DIB_DEV_USER_PASSWORD=w8EmsJXTMaG0e97NK8lM
+	export DIB_DEV_USER_SHELL=/bin/bash
+	export DIB_DEV_USER_PWDLESS_SUDO=true
+	export DIB_DEV_USER_AUTHORIZED_KEYS=/home/sa709c/.ssh/authorized_keys    
   
-  disk-image-create -a amd64 \
+	disk-image-create -a amd64 \
         -o ${DISTRO}-${DATASTORE}-${DATASTORE_VERSION}-guest-image \
         -x --qemu-img-options compat=0.10 \
         ${DISTRO}-${DATASTORE}-guest-image
