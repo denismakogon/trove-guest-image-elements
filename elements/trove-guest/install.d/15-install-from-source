@@ -6,5 +6,3 @@ set -o xtrace
 export DEBIAN_FRONTEND=noninteractive
 #apt-get update && apt-get -y dist-upgrade
 apt-get -qy install trove-guestagent
-adduser trove sudo
-touch /etc/guest_info
