@@ -7,9 +7,23 @@ set -e
 set -o xtrace
 
 export DEBIAN_FRONTEND=noninteractive
+cat > "/etc/rc.local" << _EOF_
+# Make sure to disable Linux kernel feature transparent huge pages,
+# it will affect greatly both memory usage and latency in a negative way.
+# See: http://docs.mongodb.org/manual/tutorial/transparent-huge-pages/
+if test -f /sys/kernel/mm/transparent_hugepage/defrag; then
+  echo never > /sys/kernel/mm/transparent_hugepage/defrag
+fi
+if test -f /sys/kernel/mm/transparent_hugepage/enabled; then
+  echo never > /sys/kernel/mm/transparent_hugepage/enabled
+fi
 
+exit \$?
 
-apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10
+_EOF_
+
+# see http://docs.mongodb.org/manual/tutorial/install-mongodb-on-ubuntu/
+apt-key adv --keyserver keyserver.ubuntu.com:80 --recv 7F0CEB10
 echo 'deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen' | tee /etc/apt/sources.list.d/mongodb.list
 apt-get update
 

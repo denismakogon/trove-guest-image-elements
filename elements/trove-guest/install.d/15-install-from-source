@@ -6,3 +6,10 @@ set -o xtrace
 export DEBIAN_FRONTEND=noninteractive
 #apt-get update && apt-get -y dist-upgrade
 apt-get -qy install trove-guestagent
+
+sed -i 's/\/etc\/trove\/trove\.conf/\/etc\/trove\/trove\-guestagent\.conf\ \-\-config-file\=\/etc\/guest\_info/g' /etc/init/trove-guestagent.conf
+adduser trove sudo
+touch /etc/guest_info
+chmod 755 /etc/guest_info
+chown -R trove:trove /var/log/trove
+service trove-guestagent restart
