@@ -12,4 +12,5 @@ adduser trove sudo
 mv /etc/trove/conf.d/guest_info.conf /etc/guest_info
 chmod 755 /etc/guest_info
 chown -R trove:trove /var/log/trove
-service trove-guestagent restart
+#service trove-guestagent restart
+
