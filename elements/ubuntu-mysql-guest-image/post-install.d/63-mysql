@@ -156,5 +156,3 @@ replication_namespace = trove.guestagent.strategies.replication.mysql_gtid
 # replication_password = slave_password
 
 EOF
-
-service trove-guestagent restart
