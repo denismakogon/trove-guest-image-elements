@@ -87,3 +87,10 @@ If you want to build image for vCenter please add next elements:
     ${DISTOR}-vmware-tools
 
 Note: this elements are orientied to work with Debian/Ubuntu 14.04 Trusty Tahr
+
+
+Based on
+--------
+
+https://github.com/denismakogon/trove-guest-image-elements
+https://github.com/vkmc/trove-image-elements
