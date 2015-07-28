@@ -13,4 +13,4 @@ echo "cassandra ALL=(ALL) NOPASSWD:ALL" > $TEMPFILE
 chmod 0440 $TEMPFILE
 sudo chown root:root $TEMPFILE
 sudo mv $TEMPFILE /etc/sudoers.d/60_cassandra_user
-
+visudo -c
