@@ -1,0 +1,16 @@
+#!/bin/bash
+set -e
+set -o xtrace
+
+# CONTEXT: HOST after IMAGE BUILD as SCRIPT USER
+# PURPOSE: add the guest user account to the /etc/sudoers files with NOPASSWD
+
+# Adds user to the sudoers file so they can do everything w/o a pass
+# Some binaries might be under /sbin or /usr/sbin, so make sure sudo will
+# see them by forcing PATH
+TEMPFILE="cassandra-user"
+echo "cassandra ALL=(ALL) NOPASSWD:ALL" > $TEMPFILE
+chmod 0440 $TEMPFILE
+sudo chown root:root $TEMPFILE
+sudo mv $TEMPFILE /etc/sudoers.d/60_cassandra_user
+
