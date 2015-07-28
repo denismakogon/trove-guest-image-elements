@@ -93,4 +93,5 @@ Based on
 --------
 
 https://github.com/denismakogon/trove-guest-image-elements
+
 https://github.com/vkmc/trove-image-elements
