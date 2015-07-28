@@ -7,4 +7,22 @@ set -e
 set -o xtrace
 
 export DEBIAN_FRONTEND=noninteractive
-apt-get -y install libmysqlclient18 mysql-server-${DATASTORE_VERSION:-5.6} mysql-client-${DATASTORE_VERSION:-5.6} percona-xtrabackup mysql-client-core-${DATASTORE_VERSION:-5.6}
+
+DIB_TROVE_MYSQL_ROOT_PASSWORD=${DIB_TROVE_MYSQL_ROOT_PASSWORD:-devstack}
+
+#cat << MYSQL_PRESEED | debconf-set-selections
+#mysql-server-${DATASTORE_VERSION:-5.6} mysql-server/root_password password $DIB_TROVE_MYSQL_ROOT_PASSWORD
+#mysql-server-${DATASTORE_VERSION:-5.6} mysql-server/root_password_again password $DIB_TROVE_MYSQL_ROOT_PASSWORD
+#mysql-server-${DATASTORE_VERSION:-5.6} mysql-server/start_on_boot boolean true
+#MYSQL_PRESEED
+
+apt-get -y install libmysqlclient18 mysql-server-${DATASTORE_VERSION:-5.6} mysql-client-${DATASTORE_VERSION:-5.6} percona-xtrabackup mysql-client-core-${DATASTORE_VERSION:-5.6} python-mysqldb
+
+# Bind MySQL service to all network interfaces.
+sed -i 's/127.0.0.1/0.0.0.0/g' /etc/mysql/my.cnf
+
+#set enable InnoDB, UTF-8character set, and UTF-8 collation by default
+sed -i "/bind-address/a\default-storage-engine = innodb\n\
+collation-server = utf8_general_ci\n\
+init-connect = 'SET NAMES utf8'\n\
+character-set-server = utf8" /etc/mysql/my.cnf

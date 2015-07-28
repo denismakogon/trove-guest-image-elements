@@ -30,19 +30,32 @@ Building images
 
 To build an image please run this commands:
 
+	export DISTRO=ubuntu 
+	export DATASTORE=mysql
+	export DATASTORE_VERSION=5.6
+	export DIB_CLOUD_INIT_ETC_HOSTS=true
+	export DIB_CLOUD_INIT_DATASOURCES="ConfigDrive"
+	export DIB_DEV_USER_USERNAME=ks
+	export DIB_DEV_USER_PASSWORD=w8EmsJXTMaG0e97NK8lM
+	export DIB_DEV_USER_SHELL=/bin/bash
+	export DIB_DEV_USER_PWDLESS_SUDO=true
+	export DIB_DEV_USER_AUTHORIZED_KEYS=/home/sa709c/.ssh/authorized_keys    
+	
+For Trove Guest agent config:
 
-  export DISTRO=ubuntu 
-  export DATASTORE=mysql
-  export DATASTORE_VERSION=5.6
-  export DIB_CLOUD_INIT_ETC_HOSTS=true
-  export DIB_CLOUD_INIT_DATASOURCES="ConfigDrive"
-  export DIB_DEV_USER_USERNAME=ks
-  export DIB_DEV_USER_PASSWORD=w8EmsJXTMaG0e97NK8lM
-  export DIB_DEV_USER_SHELL=/bin/bash
-  export DIB_DEV_USER_PWDLESS_SUDO=true
-  export DIB_DEV_USER_AUTHORIZED_KEYS=/home/sa709c/.ssh/authorized_keys    
+	export DIB_TROVE_RABBITMQ_HOSTS=172.24.4.1:5672
+	export DIB_TROVE_RABBIT_USERID=guest
+	export DIB_TROVE_RABBIT_PASSWORD=guest
+	export DIB_TROVE_RABBIT_USE_SSL=false
+	export DIB_TROVE_AUTH_URL=http://172.24.8.18:35357/v2.0
+	export DIB_TROVE_NOVA_PROXY_ADMIN_USER=nova
+	export DIB_TROVE_NOVA_PROXY_ADMIN_PASS=devstack
+	export DIB_TROVE_NOVA_PROXY_ADMIN_TENANT_NAME=service
+	export DIB_TROVE_SWIFT_URL=http://172.24.8.18:8080/v1/AUTH_
+	export DIB_TROVE_SWIFT_SERVICE_TYPE=object-store
+	export DIB_TROVE_BACKUP_SWIFT_CONTAINER=database_backups
   
-  disk-image-create -a amd64 \
+	disk-image-create -a amd64 \
         -o ${DISTRO}-${DATASTORE}-${DATASTORE_VERSION}-guest-image \
         -x --qemu-img-options compat=0.10 \
         ${DISTRO}-${DATASTORE}-guest-image
@@ -74,3 +87,11 @@ If you want to build image for vCenter please add next elements:
     ${DISTOR}-vmware-tools
 
 Note: this elements are orientied to work with Debian/Ubuntu 14.04 Trusty Tahr
+
+
+Based on
+--------
+
+https://github.com/denismakogon/trove-guest-image-elements
+
+https://github.com/vkmc/trove-image-elements

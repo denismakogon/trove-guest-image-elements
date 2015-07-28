@@ -1,0 +1,157 @@
+#!/bin/sh
+# CONTEXT: GUEST during CONSTRUCTION as ROOT
+# PURPOSE: Install controller base required packages
+set -e
+set -o xtrace
+DIB_TROVE_RABBITMQ_HOSTS=${DIB_TROVE_RABBITMQ_HOSTS:-172.24.8.18:5672}
+DIB_TROVE_RABBIT_USERID=${DIB_TROVE_RABBIT_USERID:-guest}
+DIB_TROVE_RABBIT_PASSWORD=${DIB_TROVE_RABBIT_PASSWORD:-guest}
+DIB_TROVE_RABBIT_USE_SSL=${DIB_TROVE_RABBIT_USE_SSL:-false}
+DIB_TROVE_AUTH_URL=${DIB_TROVE_AUTH_URL:-http://172.24.8.18:35357/v2.0}
+DIB_TROVE_NOVA_PROXY_ADMIN_USER=${DIB_TROVE_NOVA_PROXY_ADMIN_USER:-nova}
+DIB_TROVE_NOVA_PROXY_ADMIN_PASS=${DIB_TROVE_NOVA_PROXY_ADMIN_PASS:-devstack}
+DIB_TROVE_NOVA_PROXY_ADMIN_TENANT_NAME=${DIB_TROVE_NOVA_PROXY_ADMIN_TENANT_NAME:-service}
+DIB_TROVE_SWIFT_URL=${DIB_TROVE_SWIFT_URL:-http://172.24.8.18:8080/v1/AUTH_}
+DIB_TROVE_SWIFT_SERVICE_TYPE=${DIB_TROVE_SWIFT_SERVICE_TYPE:-object-store}
+DIB_TROVE_BACKUP_SWIFT_CONTAINER=${DIB_TROVE_BACKUP_SWIFT_CONTAINER:-database_backups}
+cat > /etc/trove/trove-guestagent.conf << EOF
+[DEFAULT]
+datastore_manager=cassandra
+bind_port=8778
+bind_host=0.0.0.0
+nova_proxy_admin_user=$DIB_TROVE_NOVA_PROXY_ADMIN_USER
+nova_proxy_admin_pass=$DIB_TROVE_NOVA_PROXY_ADMIN_PASS
+nova_proxy_admin_tenant_name=$DIB_TROVE_NOVA_PROXY_ADMIN_TENANT_NAME
+trove_auth_url=$DIB_TROVE_AUTH_URL
+#=========== RPC Configuration ======================
+# URL representing the messaging driver to use and its full configuration.
+# If not set, we fall back to the 'rpc_backend' option and driver specific
+# configuration.
+#transport_url=<None>
+# The messaging driver to use. Options include rabbit, qpid and zmq.
+# Default is rabbit. (string value)
+#rpc_backend=rabbit
+# The default exchange under which topics are scoped. May be
+# overridden by an exchange name specified in the 'transport_url option.
+control_exchange = trove
+# ========== Sample RabbitMQ Configuration ==========
+# The RabbitMQ broker address where a single node is used.
+# (string value)
+#rabbit_host=10.0.0.1
+# rabbit_host=172.24.8.18
+# The RabbitMQ broker port where a single node is used.
+# (integer value)
+# rabbit_port=5672
+# RabbitMQ HA cluster host:port pairs. (list value)
+rabbit_hosts=$DIB_TROVE_RABBITMQ_HOSTS
+# Connect over SSL for RabbitMQ. (boolean value)
+# rabbit_use_ssl=false
+# The RabbitMQ userid. (string value)
+rabbit_userid=$DIB_TROVE_RABBIT_USERID
+# The RabbitMQ password. (string value)
+#rabbit_password=f7999d1955c5014aa32c
+rabbit_password=$DIB_TROVE_RABBIT_PASSWORD
+# The RabbitMQ virtual host. (string value)
+# rabbit_virtual_host=/
+# ========== Configuration options for Swift ==========
+# The swift_url can be specified directly or fetched from Keystone catalog.
+# To fetch from Keystone, comment out swift_url, and uncomment the others.
+# swift_url = http://10.0.0.1:8080/v1/AUTH_
+# Region name of this node. Default value is None.
+# os_region_name = RegionOne
+# Service type to use when searching catalog.
+# swift_service_type = object-store
+swift_url = $DIB_TROVE_SWIFT_URL
+swift_service_type = $DIB_TROVE_SWIFT_SERVICE_TYPE
+#os_region_name = regionOne
+
+# ========== Datastore Manager Configurations ==========
+# Datastore manager implementations.
+# Format: list of 'datastore-type:datastore.manager.implementation.module'
+datastore_registry_ext = mysql:trove.guestagent.datastore.mysql.manager.Manager, percona:trove.guestagent.datastore.mysql.manager.Manager, redis:
+trove.guestagent.datastore.experimental.redis.manager.Manager, cassandra: trove.guestagent.datastore.experimental.cassandra.manager.Manager, couchbase: trove.guestagent.datastore.experimental.couchbase.manager.Manager', mongodb:trove.guestagent.datastore.experimental.mongodb.manager.Manager, postgresql:trove.guestagent.datastore.experimental.postgresql.manager.Manager, couchdb:trove.guestagent.datastore.experimental.couchdb.manager.Manager, vertica:trove.guestagent.datastore.experimental.vertica.manager.Manager,db2:trove.guestagent.datastore.experimental.db2.manager.Manager
+
+# ========== Default Users / DBs Configuration ==========
+
+# Users to ignore for user create/list/delete operations
+ignore_users = os_admin
+
+# Databases to ignore for db create/list/delete operations
+ignore_dbs = lost+found, mysql, information_schema
+
+# Permissions to grant "root" user by default
+root_grant = ALL
+root_grant_option = True
+# root_grant = ALTER ROUTINE, CREATE, ALTER, CREATE ROUTINE, CREATE TEMPORARY TABLES, CREATE VIEW, CREATE USER, DELETE, DROP, EVENT, EXECUTE, INDEX, INSERT, LOCK TABLES, PROCESS, REFERENCES, SELECT, SHOW DATABASES, SHOW VIEW, TRIGGER, UPDATE, USAGE
+# root_grant_option = False
+
+# Default password Length for root password
+# default_password_length = 36
+
+
+# ========== Default Storage Options for backup ==========
+
+# Default configuration for storage strategy and storage options
+# for backups
+
+# For storage to Swift, use the following as defaults:
+storage_strategy = SwiftStorage
+storage_namespace = trove.guestagent.strategies.storage.swift
+
+# Default config options for storing backups to swift
+backup_swift_container = database_backups
+backup_use_gzip_compression = True
+backup_use_openssl_encryption = True
+backup_aes_cbc_key = "default_aes_cbc_key"
+backup_use_snet = False
+backup_chunk_size = 65536
+backup_segment_max_size = 2147483648
+
+# ========== Sample Logging Configuration ==========
+
+# Show more verbose log output (sets INFO log level output)
+verbose = True
+
+# Show debugging output in logs (sets DEBUG log level output)
+debug = True
+
+# Directory and path for log files
+log_dir = /var/log/trove/
+log_file = trove-guestagent.log
+
+[profiler]
+# If False fully disable profiling feature.
+#enabled = False
+# If False doesn't trace SQL requests.
+#trace_sqlalchemy = True
+
+# ========== Datastore Specific Configuration Options ==========
+
+[mysql]
+
+# For mysql, the following are the defaults for backup, and restore:
+# backup_strategy = InnoBackupEx
+# backup_namespace = trove.guestagent.strategies.backup.mysql_impl
+# restore_namespace = trove.guestagent.strategies.restore.mysql_impl
+
+# Default configuration for mysql replication
+replication_strategy = MysqlGTIDReplication
+replication_namespace = trove.guestagent.strategies.replication.mysql_gtid
+# replication_user = slave_user
+# replication_password = slave_password
+
+[vertica]
+# For vertica, following are the defaults needed:
+# mount_point = /var/lib/vertica
+# readahead_size = 2048
+# guestagent_strategy = trove.common.strategies.cluster.experimental.vertica.guestagent.VerticaGuestAgentStrategy
+
+[mongodb]
+# For mongodb, following are the defaults needed:
+# api_strategy = trove.common.strategies.cluster.experimental.mongodb.api.MongoDbAPIStrategy
+# guestagent_strategy = trove.common.strategies.cluster.experimental.mongodb.guestagent.MongoDbGuestAgentStrategy
+# taskmanager_strategy = trove.common.strategies.cluster.experimental.mongodb.taskmanager.MongoDbTaskManagerStrategy
+
+EOF
+
+service trove-guestagent restart

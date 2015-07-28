@@ -5,6 +5,10 @@
 
 set -e
 set -o xtrace
+apt-get -y install ubuntu-cloud-keyring
+#echo "deb http://ubuntu-cloud.archive.canonical.com/ubuntu trusty-updates/kilo main" > /etc/apt/sources.list.d/cloudarchive-kilo.list
+echo -e "deb http://ubuntu-cloud.archive.canonical.com/ubuntu trusty-updates/kilo main" | sudo tee /etc/apt/sources.list.d/cloudarchive-kilo.list
+apt-get update
 
 #if ! id -u trove >/dev/null 2>&1; then
  #   echo "Adding trove user"
