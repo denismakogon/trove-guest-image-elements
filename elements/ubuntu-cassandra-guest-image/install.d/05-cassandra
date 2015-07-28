@@ -7,10 +7,29 @@ export DEBIAN_FRONTEND=noninteractive
 
 
 apt-get install -qy curl
-echo "deb http://debian.datastax.com/community stable main" >> /etc/apt/sources.list.d/cassandra.sources.list
-curl -L http://debian.datastax.com/debian/repo_key | apt-key add -
+sudo tee /etc/apt/sources.list.d/cassandra.sources.list <<_EOF_
+deb http://www.apache.org/dist/cassandra/debian 21x main
+deb-src http://www.apache.org/dist/cassandra/debian 21x main
+_EOF_
+
+# add apache cassandra keys
+gpg --keyserver keyserver.ubuntu.com --recv-keys 4BD736A82B5C1B00
+gpg --export --armor 4BD736A82B5C1B00 | sudo apt-key add -
+gpg --keyserver keyserver.ubuntu.com --recv-keys F758CE318D77295D
+gpg --export --armor F758CE318D77295D | sudo apt-key add -
+
 apt-get update
-apt-get install cassandra=${DATASTORE_VERSION:-2.1.1} -qy
+
+apt-get install -qy expect python-dev
+apt-get install -qy libxml2-dev ntp mc
+apt-get install -qy libxslt1-dev python-pexpect
+apt-get install -qy python-migrate build-essential
+
+apt-get install cassandra -qy
+
 service cassandra stop
-rm -rf /var/lib/cassandra/data/system/*
+rm -rf /var/lib/cassandra/data
+sudo mkdir /var/lib/cassandra/data
+sudo chown cassandra:cassandra -R /var/lib/cassandra
+
 service cassandra start

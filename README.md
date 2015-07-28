@@ -84,7 +84,7 @@ If you want to build image for development purposes please add next elements int
 
 If you want to build image for vCenter please add next elements:
 
-    ${DISTOR}-vmware-tools
+    ${DISTRO}-vmware-tools
 
 Note: this elements are orientied to work with Debian/Ubuntu 14.04 Trusty Tahr
 
