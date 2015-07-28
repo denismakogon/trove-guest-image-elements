@@ -1,0 +1,33 @@
+#!/bin/bash
+
+set -e
+set -o xtrace
+
+if [ "${DISTRO}" = "rhel" ]; then
+    # NOTE(vkmc) This is necessary for now. Waiting for the release.
+    yum -y install wget
+    wget http://rhos-release.virt.bos.redhat.com/repos/rhos-release/rhos-release-latest.noarch.rpm
+    yum -y --nogpgcheck localinstall rhos-release-latest.noarch.rpm
+    rhos-release 6
+    yum -y install openstack-trove-guestagent python-troveclient python-netifaces
+fi
+
+if [ "${DISTRO}" = "centos" ]; then
+    yum -y install https://rdo.fedorapeople.org/rdo-release.rpm
+    sed -i 's/http:\/\/repos.fedorapeople.org\/repos\/openstack\/openstack-juno\/epel-Derived\ from\ Red\ Hat\ Enterprise\ Linux\ 7.1\ (Source)\//http:\/\/repos.fedorapeople.org\/repos\/openstack\/openstack-juno\/epel-7\//g' /etc/yum.repos.d/rdo-release.repo
+    yum -y update
+    sed -i -e 's/^Defaults.*requiretty/# Defaults requiretty/g' /etc/sudoers
+    yum -y install openstack-trove-guestagent python-troveclient python-netifaces
+fi
+
+
+if [ "${DISTRO}" = "ubuntu" ]; then
+    export DEBIAN_FRONTEND=noninteractive
+    apt-get -qy install trove-guestagent
+    sed -i 's/\/etc\/trove\/trove\.conf/\/etc\/trove\/trove\-guestagent\.conf\ \-\-config-file\=\/etc\/guest\_info/g' /etc/init/trove-guestagent.conf
+    adduser trove sudo
+    sudo chmod 0755 /etc/trove/conf.d/guest_info.conf
+    sudo chown trove:trove /etc/trove/conf.d/guest_info.conf
+    cp -p /etc/trove/conf.d/guest_info.conf /etc/guest_info
+    chown -R trove:trove /var/log/trove
+fi
