@@ -6,7 +6,10 @@
 set -e
 set -o xtrace
 
-yum -y install mysql mysql-server-${DATASTORE_VERSION:-5.6}
+wget http://repo.mysql.com/mysql-community-release-el7-5.noarch.rpm
+rpm -ivh mysql-community-release-el7-5.noarch.rpm
+
+yum -y install mysql-community-server
 mkdir /etc/mysql
 ln -s /etc/my.cnf /etc/mysql/my.cnf
 # Bind MySQL service to all network interfaces.
@@ -17,8 +20,3 @@ sed -i "/bind-address/a\default-storage-engine = innodb\n\
 collation-server = utf8_general_ci\n\
 init-connect = 'SET NAMES utf8'\n\
 character-set-server = utf8" /etc/mysql/my.cnf
-
-cat >/etc/mysql/conf.d/no_perf_schema.cnf <<_EOF_
-[mysqld]
-performance_schema = off
-_EOF_
