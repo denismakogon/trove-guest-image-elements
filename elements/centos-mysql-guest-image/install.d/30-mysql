@@ -1,0 +1,11 @@
+#!/bin/sh
+
+# CONTEXT: GUEST during CONSTRUCTION as ROOT
+# PURPOSE: Install controller base required packages
+
+set -e
+set -o xtrace
+
+yum -y install mysql mysql-server
+mkdir /etc/mysql
+ln -s /etc/my.cnf /etc/mysql/my.cnf

@@ -4,10 +4,13 @@ Image elements for building Trove guest images
 Building prerequisites
 ----------------------
 
-Each image for datastore should include next mandatory elements:
+Ubuntu Distro: Each image for datastore should include next mandatory elements:
 
     ${DISTRO}-${DATASTORE}-guest-image (for example ubuntu-mysql-guest-image, ubuntu-cassandra-guest-image, etc.)
 
+RHEL & CentOS: Each image for datastore should include next mandatory elements:
+
+    ${DISTRO}-${DATASTORE}-guest-image (for example rhel-mysql-guest-image, rhel-mongodb-guest-image, etc.)
 
 Instructions
 ------------
@@ -87,6 +90,37 @@ If you want to build image for vCenter please add next elements:
     ${DISTRO}-vmware-tools
 
 Note: this elements are orientied to work with Debian/Ubuntu 14.04 Trusty Tahr
+
+
+RHEL without the script
+-----------------------
+
+To build an image without the script, make sure you have diskimage-builder installed (yum install -y diskimage-builder)
+and run the following commands:
+
+    # RHEL related required env
+    export REG_METHOD=portal
+    export REG_USER=<user>
+    export REG_PASSWORD=<password>
+    export REG_MACHINE_NAME=trove
+    export REG_POOL_ID=<pool>
+
+    # DIB related required env
+    export DISTRO=<distro>
+    export DATASTORE=<datastore>
+    export DIB_CLOUD_INIT_DATASOURCES="ConfigDrive"
+    disk-image-create -a amd64 \
+        -o ${DISTRO}-${DATASTORE}-guest-image \
+        -x --qemu-img-options compat=0.10 \
+        ${DISTRO}-${DATASTORE}-guest-image
+
+    Note. Only anonymous HTTP(S) accessable Git repos are allowed.
+
+RHEL with the script
+---------------
+
+Simply run 'sudo ./create-trove-image.sh -h' to see run instructions.
+
 
 
 Based on

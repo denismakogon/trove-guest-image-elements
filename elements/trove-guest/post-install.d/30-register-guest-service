@@ -1,0 +1,18 @@
+#!/bin/bash
+
+set -e
+set -o xtrace
+
+if [ "${DISTRO}" != "ubuntu" ]; then
+    # Copy service file
+    dd if=/tmp/in_target.d/openstack-trove-guestagent.service of=/usr/lib/systemd/system/openstack-trove-guestagent.service
+
+    # Configuring permissions
+    chown trove:trove /etc/trove
+    chown trove:trove /usr/share/trove
+    chown trove:trove /var/log/trove
+
+    # Enable and start service
+    systemctl enable openstack-trove-guestagent.service
+    systemctl start openstack-trove-guestagent.service
+fi

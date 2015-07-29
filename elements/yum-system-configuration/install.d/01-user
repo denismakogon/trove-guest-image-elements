@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# CONTEXT: GUEST during CONSTRUCTION as ROOT
+# PURPOSE: Add the guest image user that will own the trove agent source...if the user does not already exist
+
+set -e
+set -o xtrace
+
+echo "Adding trove user"
+
+adduser trove
+passwd -d trove
+sudo usermod trove -a -G wheel

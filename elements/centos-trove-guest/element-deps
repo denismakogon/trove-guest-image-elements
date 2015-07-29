@@ -1,0 +1,7 @@
+base
+vm
+#cloud-init-datasources
+selinux-permissive
+centos7
+yum-system-configuration
+trove-guest
