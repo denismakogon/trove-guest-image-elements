@@ -4,5 +4,6 @@ set -e
 set -o xtrace
 
 # Enable and start service
-systemctl enable mariadb.service
-systemctl start mariadb.service
+systemctl enable mysqld.service
+systemctl start mysqld.service
+systemctl status mysqld.service
