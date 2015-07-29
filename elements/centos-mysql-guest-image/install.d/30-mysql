@@ -9,16 +9,18 @@ set -o xtrace
 wget http://repo.mysql.com/mysql-community-release-el7-5.noarch.rpm
 rpm -ivh mysql-community-release-el7-5.noarch.rpm
 
-yum -y install mysql-community-server
-mkdir /etc/mysql
-ln -s /etc/my.cnf /etc/mysql/my.cnf
+yum -y install mysql-server
+sudo mkdir -p /etc/mysql/conf.d/
+sudo chown mysql:mysql -R /etc/mysql
+#mkdir /etc/mysql
+#ln -s /etc/my.cnf /etc/mysql/my.cnf
 # Bind MySQL service to all network interfaces.
-sed -i 's/127.0.0.1/0.0.0.0/g' /etc/mysql/my.cnf
+#sed -i 's/127.0.0.1/0.0.0.0/g' /etc/mysql/my.cnf
 
 #set enable InnoDB, UTF-8character set, and UTF-8 collation by default
-sed -i "/bind-address/a\default-storage-engine = innodb\n\
-collation-server = utf8_general_ci\n\
-init-connect = 'SET NAMES utf8'\n\
-character-set-server = utf8" /etc/mysql/my.cnf
+#sed -i "/bind-address/a\default-storage-engine = innodb\n\
+#collation-server = utf8_general_ci\n\
+#init-connect = 'SET NAMES utf8'\n\
+#character-set-server = utf8" /etc/mysql/my.cnf
 
 
