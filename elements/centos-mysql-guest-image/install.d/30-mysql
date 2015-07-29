@@ -18,7 +18,7 @@ collation-server = utf8_general_ci\n\
 init-connect = 'SET NAMES utf8'\n\
 character-set-server = utf8" /etc/mysql/my.cnf
 
-cat >/etc/mysql/conf.d/no_perf_schema.cnf <<_EOF_
-[mysqld]
-performance_schema = off
-_EOF_
+#cat >/etc/mysql/conf.d/no_perf_schema.cnf <<_EOF_
+#[mysqld]
+#performance_schema = off
+#_EOF_
