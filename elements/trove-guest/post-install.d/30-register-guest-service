@@ -11,7 +11,9 @@ if [ "${DISTRO}" != "ubuntu" ]; then
     chown trove:trove /etc/trove
     chown trove:trove /usr/share/trove
     chown trove:trove /var/log/trove
-
+    sudo mv /etc/trove/guest_info /etc/guest_info
+    sudo chmod 0755 /etc/guest_info
+    chown trove:trove /etc/guest_info
     # Enable and start service
     systemctl enable openstack-trove-guestagent.service
     systemctl start openstack-trove-guestagent.service
