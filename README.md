@@ -46,7 +46,7 @@ To build an image please run this commands:
 	
 For Trove Guest agent config:
 
-	export DIB_TROVE_RABBITMQ_HOSTS=172.24.4.1:5672
+	export DIB_TROVE_RABBITMQ_HOSTS=172.24.4.18:5672
 	export DIB_TROVE_RABBIT_USERID=guest
 	export DIB_TROVE_RABBIT_PASSWORD=guest
 	export DIB_TROVE_RABBIT_USE_SSL=false
