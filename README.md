@@ -33,11 +33,17 @@ Building images
 
 To build an image please run this commands:
 
-	export DISTRO=ubuntu 
-	export DATASTORE=mysql
-	export DATASTORE_VERSION=5.6
-	export DIB_CLOUD_INIT_ETC_HOSTS=true
-	export DIB_CLOUD_INIT_DATASOURCES="ConfigDrive"
+    Ubuntu:
+        export DISTRO=ubuntu
+        export DIB_RELEASE=trusty
+
+    CentOS:
+        export DISTRO=centos
+        export DIB_RELEASE=GenericCloud
+        export DIB_EXTLINUX=1
+
+For Development purposes only:
+
 	export DIB_DEV_USER_USERNAME=ks
 	export DIB_DEV_USER_PASSWORD=w8EmsJXTMaG0e97NK8lM
 	export DIB_DEV_USER_SHELL=/bin/bash
@@ -81,7 +87,7 @@ For Trove Guest agent config:
             default datastore version 9.3 would be picked
 
 
-If you want to build image for development purposes please add next elements into previos command:
+If you want to build image for development purposes please add next elements into disk-image-create command:
 
     openssh-server
 
@@ -89,7 +95,7 @@ If you want to build image for vCenter please add next elements:
 
     ${DISTRO}-vmware-tools
 
-Note: this elements are orientied to work with Debian/Ubuntu 14.04 Trusty Tahr
+Note: this elements are orientied to work with Debian/Ubuntu 14.04 Trusty Tahr, CentOS 7.x
 
 
 RHEL without the script
