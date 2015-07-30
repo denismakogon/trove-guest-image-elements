@@ -87,7 +87,7 @@ For Trove Guest agent config:
             default datastore version 9.3 would be picked
 
 
-If you want to build image for development purposes please add next elements into previos command:
+If you want to build image for development purposes please add next elements into disk-image-create command:
 
     openssh-server
 
@@ -95,7 +95,7 @@ If you want to build image for vCenter please add next elements:
 
     ${DISTRO}-vmware-tools
 
-Note: this elements are orientied to work with Debian/Ubuntu 14.04 Trusty Tahr
+Note: this elements are orientied to work with Debian/Ubuntu 14.04 Trusty Tahr, CentOS 7.x
 
 
 RHEL without the script
