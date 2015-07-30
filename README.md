@@ -33,11 +33,17 @@ Building images
 
 To build an image please run this commands:
 
-	export DISTRO=ubuntu 
-	export DATASTORE=mysql
-	export DATASTORE_VERSION=5.6
-	export DIB_CLOUD_INIT_ETC_HOSTS=true
-	export DIB_CLOUD_INIT_DATASOURCES="ConfigDrive"
+    Ubuntu:
+        export DISTRO=ubuntu
+        export DIB_RELEASE=trusty
+
+    CentOS:
+        export DISTRO=centos
+        export DIB_RELEASE=GenericCloud
+        export DIB_EXTLINUX=1
+
+For Development purposes only:
+
 	export DIB_DEV_USER_USERNAME=ks
 	export DIB_DEV_USER_PASSWORD=w8EmsJXTMaG0e97NK8lM
 	export DIB_DEV_USER_SHELL=/bin/bash
