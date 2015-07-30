@@ -1,0 +1,5 @@
+#!/bin/bash
+set -e
+set -o xtrace
+
+export DIB_EXTLINUX=1
