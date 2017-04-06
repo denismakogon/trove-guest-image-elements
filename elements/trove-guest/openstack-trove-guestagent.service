@@ -5,7 +5,7 @@ After=syslog.target network.target cloud-init.service
 [Service]
 Type=simple
 User=trove
-ExecStart=/usr/bin/trove-guestagent --config-file /etc/trove/trove-guestagent.conf --config-file /etc/guest_info --log-dir=/var/log/trove --logfile=trove-guestagent.log
+ExecStart=/usr/bin/trove-guestagent --config-file /etc/trove/trove-guestagent.conf --config-file /etc/guest_info --config-file /etc/trove/conf.d/guest_info.conf --config-file /etc/trove/conf.d/trove-guestagent.conf --log-dir=/var/log/trove --logfile=trove-guestagent.log
 Restart=on-failure
 
 [Install]

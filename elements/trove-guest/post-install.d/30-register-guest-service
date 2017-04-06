@@ -14,6 +14,10 @@ if [ "${DISTRO}" != "ubuntu" ]; then
     sudo mv /etc/trove/guest_info /etc/guest_info
     sudo chmod 0755 /etc/guest_info
     chown trove:trove /etc/guest_info
+    mkdir -p /etc/trove/conf.d
+    sudo cp /etc/guest_info /etc/trove/conf.d/guest_info.conf
+    echo '[DEFAULT]' > /etc/trove/conf.d/trove-guestagent.conf
+    chown -R trove:trove /etc/trove/conf.d
     # Enable and start service
     systemctl enable openstack-trove-guestagent.service
     systemctl start openstack-trove-guestagent.service

@@ -9,7 +9,11 @@ set -o xtrace
 wget http://repo.mysql.com/mysql-community-release-el7-5.noarch.rpm
 rpm -ivh mysql-community-release-el7-5.noarch.rpm
 
+set +e
+yum -y erase mariadb-libs mariadb-config
 yum -y install mysql-server
+yum -y install openstack-trove-guestagent
+set -e
 sudo mkdir -p /etc/mysql/conf.d/
 sudo chown mysql:mysql -R /etc/mysql
 #mkdir /etc/mysql

@@ -88,7 +88,7 @@ swift_service_type = $DIB_TROVE_SWIFT_SERVICE_TYPE
 # ========== Datastore Manager Configurations ==========
 # Datastore manager implementations.
 # Format: list of 'datastore-type:datastore.manager.implementation.module'
-# datastore_registry_ext = mysql:trove.guestagent.datastore.mysql.manager.Manager, percona:trove.guestagent.datastore.mysql.manager.Manager
+datastore_registry_ext = mysql:trove.guestagent.datastore.mysql.manager.Manager, percona:trove.guestagent.datastore.mysql.manager.Manager
 
 
 # ========== Default Users / DBs Configuration ==========
