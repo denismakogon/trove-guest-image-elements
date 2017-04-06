@@ -13,6 +13,7 @@ if [ "${DISTRO}" = "rhel" ]; then
 fi
 
 if [ "${DISTRO}" = "centos" ]; then
+    yum -y install wget
     rpm -q rdo-release || install-packages http://rdo.fedorapeople.org/openstack-$RDO_RELEASE/rdo-release-$RDO_RELEASE.rpm
     #yum -y install https://rdo.fedorapeople.org/rdo-release.rpm
 #    sed -i 's/http:\/\/repos.fedorapeople.org\/repos\/openstack\/openstack-juno\/epel-Derived\ from\ Red\ Hat\ Enterprise\ Linux\ 7.1\ (Source)\//http:\/\/repos.fedorapeople.org\/repos\/openstack\/openstack-kilo\/el7\//g' /etc/yum.repos.d/rdo-release.repo
